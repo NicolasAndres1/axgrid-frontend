@@ -20,6 +20,7 @@ export const useEnergy = () => {
 
   return {
     energyTypes,
+    energyOfferingsData,
     isEnergyOfferingsLoading,
     energyOfferingsError,
     isEnergyOfferingsSuccess,

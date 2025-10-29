@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { MarketPage } from './pages/MarketPage';
 import { SellEnergyPage } from './pages/SellEnergyPage';
 import styles from './App.module.css';
 
 export default function App() {
+  const [selectedEnergyType, setSelectedEnergyType] = useState('');
+
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
@@ -18,7 +21,15 @@ export default function App() {
       <main className={styles.main}>
         <Routes>
           <Route path="/" element={<MarketPage />} />
-          <Route path="/sell" element={<SellEnergyPage />} />
+          <Route
+            path="/sell"
+            element={
+              <SellEnergyPage
+                selectedEnergyType={selectedEnergyType}
+                setSelectedEnergyType={setSelectedEnergyType}
+              />
+            }
+          />
           <Route path="*" element={<h2>404 - Page not found</h2>} />
         </Routes>
       </main>

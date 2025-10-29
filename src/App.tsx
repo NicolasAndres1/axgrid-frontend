@@ -5,10 +5,10 @@ import styles from './App.module.css';
 
 export default function App() {
   return (
-    <div>
+    <div className={styles.container}>
       <nav className={styles.nav}>
         <Link to="/" className={styles.link}>
-          AxGrid - Market
+          Market
         </Link>
         <Link to="/sell" className={styles.link}>
           Sell Energy

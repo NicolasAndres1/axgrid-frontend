@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import type { ApiFormConfig } from '../../../types/forms.types';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { DynamicFormField } from '../DynamicFormField/DynamicFormField';
+import { DynamicFormField } from '../dynamic-form-field/DynamicFormField';
 import styles from './DynamicFormGenerator.module.css';
 
 interface GeneratorProps {

@@ -1,11 +1,22 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { MarketPage } from './pages/MarketPage';
-import { SellEnergyPage } from './pages/SellEnergyPage';
+import { MarketPage } from './pages/market/MarketPage';
+import { SellEnergyPage } from './pages/sell-energy/SellEnergyPage';
 import styles from './App.module.css';
+import { useMarketStore } from './store/marketStore';
 
 export default function App() {
-  const [selectedEnergyType, setSelectedEnergyType] = useState('');
+  const connect = useMarketStore((state) => state.connect);
+  const disconnect = useMarketStore((state) => state.disconnect);
+
+  useEffect(() => {
+    connect();
+
+    return () => {
+      // Clean up the socket when the component unmounts
+      disconnect();
+    };
+  }, [connect, disconnect]);
 
   return (
     <div className={styles.container}>
@@ -21,15 +32,7 @@ export default function App() {
       <main className={styles.main}>
         <Routes>
           <Route path="/" element={<MarketPage />} />
-          <Route
-            path="/sell"
-            element={
-              <SellEnergyPage
-                selectedEnergyType={selectedEnergyType}
-                setSelectedEnergyType={setSelectedEnergyType}
-              />
-            }
-          />
+          <Route path="/sell" element={<SellEnergyPage />} />
           <Route path="*" element={<h2>404 - Page not found</h2>} />
         </Routes>
       </main>

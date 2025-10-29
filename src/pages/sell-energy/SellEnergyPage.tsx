@@ -1,15 +1,9 @@
-import { useEnergy } from '../hooks/useEnergy';
-import { DynamicFormGenerator } from '../components/form/DynamicFormGenerator/DynamicFormGenerator';
+import { useEnergy } from '../../hooks/useEnergy';
+import { DynamicFormGenerator } from '../../components/form/dynamic-form-generator/DynamicFormGenerator';
+import { useState } from 'react';
 
-interface SellEnergyPageProps {
-  selectedEnergyType: string;
-  setSelectedEnergyType: (value: string) => void;
-}
-
-export const SellEnergyPage = ({
-  selectedEnergyType,
-  setSelectedEnergyType,
-}: SellEnergyPageProps) => {
+export const SellEnergyPage = () => {
+  const [selectedEnergyType, setSelectedEnergyType] = useState('');
   const {
     energyTypes,
     energyOfferingsData,

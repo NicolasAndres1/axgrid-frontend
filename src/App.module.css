@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+.link {
+  margin-right: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.main {
+  padding: 1.5rem;
+}

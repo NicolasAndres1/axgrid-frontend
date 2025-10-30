@@ -1,4 +1,3 @@
-// src/hooks/useFilteredOffers.ts
 import { useMemo } from 'react';
 import {
   type EnergyOffer,

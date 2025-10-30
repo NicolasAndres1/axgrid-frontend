@@ -35,6 +35,8 @@ export const DynamicFormGenerator = ({
     reset();
   };
 
+  // TODO: Ask for UIHints purposal
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       {fieldsToRender.map((field) => (

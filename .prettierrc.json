@@ -8,5 +8,9 @@
   "endOfLine": "lf",
   "bracketSpacing": true,
   "bracketSameLine": false,
-  "proseWrap": "preserve"
+  "proseWrap": "preserve",
+  "typescript": {
+    "parser": "typescript",
+    "plugins": ["prettier-plugin-organize-imports"]
+  }
 }

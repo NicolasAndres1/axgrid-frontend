@@ -1,0 +1,84 @@
+.tableCell {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.tableCellCentered {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.detailsButton {
+  margin-right: 5px;
+  padding: 6px 12px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.detailsButton:hover {
+  background-color: #5a6268;
+}
+
+.tradeButton {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tradeButton:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.tradeButton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@keyframes flashCreateAnimation {
+  0% {
+    background-color: #43b35d;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes flashUpdateAnimation {
+  0% {
+    background-color: #cfb560;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes flashCompletedAnimation {
+  0% {
+    background-color: #989eed;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.flashCreate {
+  animation: flashCreateAnimation 5s;
+}
+
+.flashUpdate {
+  animation: flashUpdateAnimation 5s;
+}
+
+.flashCompleted {
+  animation: flashCompletedAnimation 5s;
+}

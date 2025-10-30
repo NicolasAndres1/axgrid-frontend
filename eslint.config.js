@@ -28,15 +28,12 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      // Reglas básicas de formateo (indent manejado por Prettier)
-      // 'indent': ['error', 2, { SwitchCase: 1 }],
       'linebreak-style': ['error', 'unix'],
       quotes: ['error', 'single', { avoidEscape: true }],
       semi: ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
-      'comma-spacing': ['error', { before: false, after: true }],
       'key-spacing': ['error', { beforeColon: false, afterColon: true }],
       'space-before-blocks': ['error', 'always'],
       'space-before-function-paren': [

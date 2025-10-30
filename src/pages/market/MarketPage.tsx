@@ -1,13 +1,34 @@
+import { useState } from 'react';
 import { useMarketStore } from '../../store/marketStore';
-import { type EnergyOffer } from '../../types/energyOffers.types';
+import {
+  type EnergyOffer,
+  type EnergySourceType,
+} from '../../types/energyOffers.types';
+import { useFilteredOffers } from '../../hooks/useFilteredOffers';
 import styles from './MarketPage.module.css';
+import { SourceFilter } from '../../components/market/source-filter/SourceFilter';
+import { MarketRow } from '../../components/market/table-row/TableRow';
 
 export const MarketPage = () => {
-  const offers = useMarketStore((state) => state.offers);
+  const allOffers = useMarketStore((state) => state.offers);
   const setOfferStatus = useMarketStore((state) => state.setOfferStatus);
+  const [sourceFilter, setSourceFilter] = useState<EnergySourceType | 'all'>(
+    'all',
+  );
+  const filteredOffers = useFilteredOffers(allOffers, sourceFilter);
+  const [selectedOffer, setSelectedOffer] = useState<EnergyOffer | null>(null);
 
   const handleTrade = (id: string) => {
     setOfferStatus(id, 'completed');
+  };
+
+  const handleDetails = (offer: EnergyOffer) => {
+    setSelectedOffer(offer);
+    console.log('Selected Offer for Details:', offer);
+  };
+
+  const handleCloseDetailsModal = () => {
+    setSelectedOffer(null);
   };
 
   return (
@@ -17,7 +38,14 @@ export const MarketPage = () => {
       <hr className={styles.divider} />
 
       <div className={styles.container}>
-        <p className={styles.offersCount}>{offers.length} offers available</p>
+        <p>
+          {filteredOffers.length} of {allOffers.length} offers showing
+        </p>
+
+        <SourceFilter
+          sourceFilter={sourceFilter}
+          setSourceFilter={setSourceFilter}
+        />
 
         <table className={styles.table}>
           <thead>
@@ -31,27 +59,29 @@ export const MarketPage = () => {
             </tr>
           </thead>
           <tbody>
-            {offers.map((offer: EnergyOffer) => (
-              <tr key={offer.id}>
-                <td className={styles.tableCell}>{offer.sourceType}</td>
-                <td className={styles.tableCell}>{offer.vendor}</td>
-                <td className={styles.tableCell}>{offer.price.toFixed(2)}</td>
-                <td className={styles.tableCell}>{offer.quantity}</td>
-                <td className={styles.tableCell}>{offer.status}</td>
-                <td className={styles.tableCellCentered}>
-                  <button
-                    className={styles.tradeButton}
-                    onClick={() => handleTrade(offer.id)}
-                    disabled={offer.status === 'completed'}
-                  >
-                    Trade
-                  </button>
-                  {/* Aquí podríamos añadir un botón de "Details" */}
-                </td>
-              </tr>
+            {filteredOffers.map((offer: EnergyOffer) => (
+              <MarketRow
+                key={offer.id}
+                offer={offer}
+                onTrade={() => handleTrade(offer.id)}
+                onDetails={handleDetails}
+              />
             ))}
           </tbody>
         </table>
+
+        {selectedOffer && (
+          <div
+            className={styles.detailsModalOverlay}
+            onClick={handleCloseDetailsModal}
+          >
+            <div className={styles.detailsModal}>
+              <h2>{selectedOffer.vendor}'s Offer</h2>
+              <pre>{JSON.stringify(selectedOffer, null, 2)}</pre>
+              <button onClick={handleCloseDetailsModal}>Close</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

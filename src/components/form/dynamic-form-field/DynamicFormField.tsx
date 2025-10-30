@@ -1,14 +1,17 @@
 import { useMemo, useCallback } from 'react';
-import type { FormField, FormFieldOption } from '../../../types/forms.types';
-import type { UseFormRegister } from 'react-hook-form';
+import type { FormField, FormFieldOption } from '../../../types/forms';
+import type { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 import styles from './DynamicFormField.module.css';
 
-interface FieldProps {
+interface FieldProps<TFieldValues extends FieldValues> {
   field: FormField;
-  register: UseFormRegister<any>; // TODO: Add type
+  register: UseFormRegister<TFieldValues>;
 }
 
-export const DynamicFormField = ({ field, register }: FieldProps) => {
+export const DynamicFormField = <TFieldValues extends FieldValues>({
+  field,
+  register,
+}: FieldProps<TFieldValues>) => {
   const { key, label, type, required, unit, placeholder, options } = field;
 
   const fieldLabel = useMemo(
@@ -38,7 +41,7 @@ export const DynamicFormField = ({ field, register }: FieldProps) => {
         <input
           type="radio"
           value={opt.value}
-          {...register(key, { required: required })}
+          {...register(key as Path<TFieldValues>, { required: required })}
         />
         {opt.label}
       </label>
@@ -52,7 +55,7 @@ export const DynamicFormField = ({ field, register }: FieldProps) => {
         <input
           type="checkbox"
           value={opt.value}
-          {...register(key, { required: required })}
+          {...register(key as Path<TFieldValues>, { required: required })}
         />
         {opt.label}
       </label>
@@ -71,7 +74,7 @@ export const DynamicFormField = ({ field, register }: FieldProps) => {
               id={key}
               type={type}
               placeholder={placeholder || ''}
-              {...register(key, { required: required })}
+              {...register(key as Path<TFieldValues>, { required: required })}
             />
             {unit && <span className={styles.unit}>{unit}</span>}
           </div>
@@ -82,7 +85,10 @@ export const DynamicFormField = ({ field, register }: FieldProps) => {
       return (
         <div className={styles.field}>
           {fieldLabel}
-          <select id={key} {...register(key, { required: required })}>
+          <select
+            id={key}
+            {...register(key as Path<TFieldValues>, { required: required })}
+          >
             {options?.map(renderSelectOption)}
           </select>
         </div>

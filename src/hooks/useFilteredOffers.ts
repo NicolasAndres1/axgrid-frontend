@@ -1,25 +1,25 @@
 import { useMemo } from 'react';
-import {
-  type EnergyOffer,
-  type EnergySourceType,
-} from '../types/energyOffers.types';
+import type { EnergyOffer, MarketFilters } from '../types';
 
-/**
- * Filter market offers
- * @param allOffers - Full offers list
- * @param sourceFilter - Source filter selected
- */
 export const useFilteredOffers = (
   allOffers: EnergyOffer[],
-  sourceFilter: EnergySourceType | 'all',
+  filters: MarketFilters,
 ) => {
   const filteredOffers = useMemo(() => {
-    if (sourceFilter === 'all') {
-      return allOffers;
+    let offers = allOffers;
+
+    // Source filter
+    if (filters.source !== 'all') {
+      offers = offers.filter((offer) => offer.sourceType === filters.source);
     }
 
-    return allOffers.filter((offer) => offer.sourceType === sourceFilter);
-  }, [allOffers, sourceFilter]);
+    // Status filter
+    if (filters.status !== 'all') {
+      offers = offers.filter((offer) => offer.status === filters.status);
+    }
+
+    return offers;
+  }, [allOffers, filters]);
 
   return filteredOffers;
 };

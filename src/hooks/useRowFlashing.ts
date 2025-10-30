@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { type EnergyOffer } from '../types';
+import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../types';
 
 const usePrevious = <T>(value: T) => {
   const ref = useRef<T | undefined>(undefined);
@@ -38,7 +38,8 @@ export const useRowFlash = (offer: EnergyOffer) => {
 
     if (hasUpdated) {
       const justCompleted =
-        prevStatus !== 'completed' && offer.status === 'completed';
+        prevStatus !== ENERGY_OFFER_STATUSES.COMPLETED &&
+        offer.status === ENERGY_OFFER_STATUSES.COMPLETED;
 
       if (justCompleted) {
         setFlashClass(FlashClass.COMPLETED);

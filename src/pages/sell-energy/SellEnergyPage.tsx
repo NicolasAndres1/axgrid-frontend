@@ -11,6 +11,8 @@ export const SellEnergyPage = () => {
     energyOfferingsError,
     isEnergyOfferingsSuccess,
   } = useEnergy();
+  const shouldShowForm =
+    selectedEnergyType && energyOfferingsData && isEnergyOfferingsSuccess;
 
   if (isEnergyOfferingsLoading) return <div>Loading...</div>;
   if (energyOfferingsError)
@@ -37,14 +39,12 @@ export const SellEnergyPage = () => {
 
       <hr />
 
-      {isEnergyOfferingsSuccess &&
-        selectedEnergyType &&
-        energyOfferingsData && (
-          <DynamicFormGenerator
-            energyType={selectedEnergyType}
-            config={energyOfferingsData}
-          />
-        )}
+      {shouldShowForm && (
+        <DynamicFormGenerator
+          energyType={selectedEnergyType}
+          config={energyOfferingsData}
+        />
+      )}
     </div>
   );
 };

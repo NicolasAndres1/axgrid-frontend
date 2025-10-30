@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../../config';
-import type { ApiFormConfig } from '../../types/forms.types';
+import type { ApiFormConfig } from '../../types';
 
 export const fetchEnergyOfferings = async (): Promise<ApiFormConfig> => {
   const response = await fetch(`${API_BASE_URL}/energy-offerings`);

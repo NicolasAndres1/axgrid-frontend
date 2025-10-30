@@ -11,13 +11,25 @@ export interface EnergyOffer {
   updatedAt: number; // Unix timestamp
 }
 
-export type EnergySourceType = 'solar' | 'gas';
+export const ENERGY_SOURCE_TYPES = {
+  SOLAR: 'solar',
+  GAS: 'gas',
+} as const;
+
+export type EnergySourceType =
+  (typeof ENERGY_SOURCE_TYPES)[keyof typeof ENERGY_SOURCE_TYPES];
+
 export type EnergyUnit = 'MWh';
+
+export const ENERGY_OFFER_STATUSES = {
+  PENDING: 'pending',
+  PROCESSING: 'processing',
+  ACTIVE: 'active',
+  COMPLETED: 'completed',
+} as const;
+
 export type EnergyOfferStatus =
-  | 'pending'
-  | 'processing'
-  | 'active'
-  | 'completed';
+  (typeof ENERGY_OFFER_STATUSES)[keyof typeof ENERGY_OFFER_STATUSES];
 
 export interface MarketMetrics {
   totalOffers: number;

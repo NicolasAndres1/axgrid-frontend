@@ -4,7 +4,7 @@ import {
   type EnergyOffer,
   type EnergyOfferStatus,
   type MarketMetrics,
-} from '../types/energyOffers.types';
+} from '../types/energyOffers';
 
 interface MarketState {
   offers: EnergyOffer[];

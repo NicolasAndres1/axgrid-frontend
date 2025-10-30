@@ -1,4 +1,4 @@
-import { type EnergyOffer } from '../../../types';
+import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
 import styles from './TableRow.module.css';
 import { useRowFlash } from '../../../hooks/useRowFlashing';
 
@@ -29,7 +29,7 @@ export const MarketRow = ({ offer, onTrade, onDetails }: MarketRowProps) => {
         <button
           className={styles.tradeButton}
           onClick={() => onTrade(offer.id)}
-          disabled={offer.status === 'completed'}
+          disabled={offer.status === ENERGY_OFFER_STATUSES.COMPLETED}
         >
           Trade
         </button>

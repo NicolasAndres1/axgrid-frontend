@@ -1,0 +1,9 @@
+.container {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 20px;
+}
+
+.label {
+  margin-right: 8px;
+}

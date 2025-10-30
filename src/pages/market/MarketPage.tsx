@@ -1,25 +1,40 @@
 import { useState } from 'react';
 import { useMarketStore } from '../../store/marketStore';
 import {
+  ENERGY_OFFER_STATUSES,
   type EnergyOffer,
+  type EnergyOfferStatus,
   type EnergySourceType,
-} from '../../types/energyOffers.types';
+  type MarketFilters,
+} from '../../types';
 import { useFilteredOffers } from '../../hooks/useFilteredOffers';
 import styles from './MarketPage.module.css';
-import { SourceFilter } from '../../components/market/source-filter/SourceFilter';
 import { MarketRow } from '../../components/market/table-row/TableRow';
+import { MarketFilter } from '../../components/market/market-filter/MarketFilter';
 
 export const MarketPage = () => {
+  const [filters, setFilters] = useState<MarketFilters>({
+    source: 'all',
+    status: 'all',
+  });
+
   const allOffers = useMarketStore((state) => state.offers);
   const setOfferStatus = useMarketStore((state) => state.setOfferStatus);
-  const [sourceFilter, setSourceFilter] = useState<EnergySourceType | 'all'>(
-    'all',
-  );
-  const filteredOffers = useFilteredOffers(allOffers, sourceFilter);
+  const filteredOffers = useFilteredOffers(allOffers, filters);
   const [selectedOffer, setSelectedOffer] = useState<EnergyOffer | null>(null);
 
+  const handleFilterChange = (
+    filterType: keyof MarketFilters,
+    value: EnergySourceType | EnergyOfferStatus | 'all',
+  ) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
+  };
+
   const handleTrade = (id: string) => {
-    setOfferStatus(id, 'completed');
+    setOfferStatus(id, ENERGY_OFFER_STATUSES.COMPLETED);
   };
 
   const handleDetails = (offer: EnergyOffer) => {
@@ -42,10 +57,7 @@ export const MarketPage = () => {
           {filteredOffers.length} of {allOffers.length} offers showing
         </p>
 
-        <SourceFilter
-          sourceFilter={sourceFilter}
-          setSourceFilter={setSourceFilter}
-        />
+        <MarketFilter filters={filters} onFilterChange={handleFilterChange} />
 
         <table className={styles.table}>
           <thead>

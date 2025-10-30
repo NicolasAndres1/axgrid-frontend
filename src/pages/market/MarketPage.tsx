@@ -11,6 +11,7 @@ import { useFilteredOffers } from '../../hooks/useFilteredOffers';
 import styles from './MarketPage.module.css';
 import { MarketRow } from '../../components/market/table-row/TableRow';
 import { MarketFilter } from '../../components/market/market-filter/MarketFilter';
+import { OfferDetailsModal } from '../../components/market/offer-details-modal/OfferDetailsModal';
 
 export const MarketPage = () => {
   const [filters, setFilters] = useState<MarketFilters>({
@@ -37,28 +38,21 @@ export const MarketPage = () => {
     setOfferStatus(id, ENERGY_OFFER_STATUSES.COMPLETED);
   };
 
-  const handleDetails = (offer: EnergyOffer) => {
-    setSelectedOffer(offer);
-    console.log('Selected Offer for Details:', offer);
-  };
-
   const handleCloseDetailsModal = () => {
     setSelectedOffer(null);
   };
 
   return (
     <div>
-      <h1 className={styles.title}>Energy Market</h1>
-
-      <hr className={styles.divider} />
-
+      <h1 className={styles.title}>Energy Market</h1> // TODO: Extract title to
+      a component
       <div className={styles.container}>
+        // TODO: Consider extracting container to a component
         <p>
           {filteredOffers.length} of {allOffers.length} offers showing
         </p>
-
         <MarketFilter filters={filters} onFilterChange={handleFilterChange} />
-
+        <hr className={styles.divider} />
         <table className={styles.table}>
           <thead>
             <tr className={styles.tableHead}>
@@ -76,23 +70,16 @@ export const MarketPage = () => {
                 key={offer.id}
                 offer={offer}
                 onTrade={() => handleTrade(offer.id)}
-                onDetails={handleDetails}
+                onDetails={setSelectedOffer}
               />
             ))}
           </tbody>
         </table>
-
         {selectedOffer && (
-          <div
-            className={styles.detailsModalOverlay}
-            onClick={handleCloseDetailsModal}
-          >
-            <div className={styles.detailsModal}>
-              <h2>{selectedOffer.vendor}'s Offer</h2>
-              <pre>{JSON.stringify(selectedOffer, null, 2)}</pre>
-              <button onClick={handleCloseDetailsModal}>Close</button>
-            </div>
-          </div>
+          <OfferDetailsModal
+            offer={selectedOffer}
+            onClose={handleCloseDetailsModal}
+          />
         )}
       </div>
     </div>

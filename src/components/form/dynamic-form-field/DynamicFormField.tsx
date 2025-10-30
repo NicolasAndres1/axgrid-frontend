@@ -26,6 +26,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
   // Set of functions to render the different types of fields with multiple options
   // Extracted for better readability
+  // ------------------------------------------------------------
   const renderSelectOption = useCallback(
     (opt: FormFieldOption) => (
       <option key={opt.value} value={opt.value}>
@@ -62,6 +63,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
     ),
     [key, register, required],
   );
+  // ------------------------------------------------------------
 
   switch (type) {
     case 'text':

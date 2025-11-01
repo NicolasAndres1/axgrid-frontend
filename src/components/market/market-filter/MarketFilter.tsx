@@ -1,17 +1,11 @@
-import type { EnergySourceType, EnergyOfferStatus } from '../../../types';
+import {
+  type EnergySourceType,
+  type EnergyOfferStatus,
+  FILTER_SOURCE_TYPES,
+  FILTER_OFFER_STATUSES,
+} from '../../../types';
 import type { MarketFilters } from '../../../types';
-import { ENERGY_OFFER_STATUSES, ENERGY_SOURCE_TYPES } from '../../../types';
 import styles from './MarketFilter.module.css';
-
-const SOURCE_TYPES: (EnergySourceType | 'all')[] = [
-  'all',
-  ...Object.values(ENERGY_SOURCE_TYPES),
-];
-
-const OFFER_STATUSES: (EnergyOfferStatus | 'all')[] = [
-  'all',
-  ...Object.values(ENERGY_OFFER_STATUSES),
-];
 
 interface FilterFieldProps {
   id: string;
@@ -25,7 +19,7 @@ interface MarketFiltersProps {
   filters: MarketFilters;
   onFilterChange: (
     filterType: keyof MarketFilters,
-    value: EnergySourceType | EnergyOfferStatus | 'all',
+    value: EnergySourceType | EnergyOfferStatus,
   ) => void;
 }
 
@@ -39,12 +33,12 @@ export const MarketFilter = ({
         id="sourceFilter"
         label="Filter by Source:"
         value={filters.source}
-        options={SOURCE_TYPES.map((source) => ({
+        options={FILTER_SOURCE_TYPES.map((source) => ({
           value: source,
           label: source,
         }))}
         onChange={(value) =>
-          onFilterChange('source', value as EnergySourceType | 'all')
+          onFilterChange('source', value as EnergySourceType)
         }
       />
 
@@ -52,12 +46,12 @@ export const MarketFilter = ({
         id="statusFilter"
         label="Filter by Status:"
         value={filters.status}
-        options={OFFER_STATUSES.map((status) => ({
+        options={FILTER_OFFER_STATUSES.map((status) => ({
           value: status,
           label: status,
         }))}
         onChange={(value) =>
-          onFilterChange('status', value as EnergyOfferStatus | 'all')
+          onFilterChange('status', value as EnergyOfferStatus)
         }
       />
     </div>

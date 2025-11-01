@@ -5,11 +5,13 @@ import styles from './OfferDetailsModal.module.css';
 interface OfferDetailsModalProps {
   offer: EnergyOffer;
   onClose: () => void;
+  handleTrade: () => void;
 }
 
 export const OfferDetailsModal = ({
   offer,
   onClose,
+  handleTrade,
 }: OfferDetailsModalProps) => {
   const onContentClick = (e: React.MouseEvent) => e.stopPropagation();
 
@@ -52,6 +54,19 @@ export const OfferDetailsModal = ({
             <strong>Last Update: </strong>
             {new Date(offer.updatedAt).toLocaleString()}
           </p>
+        </div>
+
+        <hr />
+        <div className={styles.modalFooter}>
+          <button
+            onClick={() => {
+              handleTrade();
+              onClose();
+            }}
+            className={styles.tradeButton}
+          >
+            Trade
+          </button>
         </div>
       </div>
     </div>

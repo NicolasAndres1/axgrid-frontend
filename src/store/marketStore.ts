@@ -10,14 +10,12 @@ interface MarketState {
   offers: EnergyOffer[];
   metrics: MarketMetrics;
   isConnected: boolean;
-  // Actions
+
   connect: () => void;
   disconnect: () => void;
   setOfferStatus: (id: string, status: EnergyOfferStatus) => void;
 }
 
-// Socket instance created outside the store
-// with autoConnect: false to control when it connects
 const SOCKET_URL = 'http://localhost:4001';
 const socket: Socket = io(SOCKET_URL, {
   autoConnect: false,

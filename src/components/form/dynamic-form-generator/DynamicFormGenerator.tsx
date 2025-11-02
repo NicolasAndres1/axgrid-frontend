@@ -3,7 +3,7 @@ import type { ApiFormConfig } from '../../../types/forms';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { DynamicFormField } from '../dynamic-form-field/DynamicFormField';
 import styles from './DynamicFormGenerator.module.css';
-import { Button } from '../../common/button/Button';
+import { Button } from '../../common';
 
 interface GeneratorProps {
   energyType: string;

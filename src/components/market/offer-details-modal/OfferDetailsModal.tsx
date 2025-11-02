@@ -1,7 +1,7 @@
 import React from 'react';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
 import styles from './OfferDetailsModal.module.css';
-import { Button } from '../../common/button/Button';
+import { Button } from '../../common';
 
 interface OfferDetailsModalProps {
   offer: EnergyOffer;

@@ -1,10 +1,10 @@
 import {
   type EnergySourceType,
   type EnergyOfferStatus,
+  type MarketFilters,
   FILTER_SOURCE_TYPES,
   FILTER_OFFER_STATUSES,
 } from '../../../types';
-import type { MarketFilters } from '../../../types';
 import styles from './MarketFilter.module.css';
 
 interface FilterFieldProps {

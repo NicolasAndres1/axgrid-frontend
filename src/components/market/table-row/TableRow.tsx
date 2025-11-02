@@ -1,7 +1,7 @@
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
 import styles from './TableRow.module.css';
 import { useRowFlash } from '../../../hooks/useRowFlashing';
-import { Button } from '../../common/button/Button';
+import { Button } from '../../common';
 
 interface MarketRowProps {
   offer: EnergyOffer;

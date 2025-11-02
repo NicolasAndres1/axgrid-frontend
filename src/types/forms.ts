@@ -6,11 +6,20 @@ export interface FormFieldOption {
 export interface FormField {
   key: string;
   label: string;
-  type: 'text' | 'number' | 'select' | 'radio' | 'checkbox-group';
+  type:
+    | 'text'
+    | 'number'
+    | 'select'
+    | 'radio'
+    | 'checkbox'
+    | 'checkbox-group'
+    | 'textarea'
+    | 'file';
   required: boolean;
   unit?: string;
   placeholder?: string;
   options?: FormFieldOption[];
+  accept?: string; // For file input
 }
 
 export interface EnergySourceConfig {

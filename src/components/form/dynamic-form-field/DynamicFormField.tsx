@@ -11,7 +11,11 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
   field,
   register,
 }: FieldProps<TFieldValues>) => {
-  const { key, label, type, required, unit, placeholder, options } = field;
+  const { key, label, type, required, unit, placeholder, options, accept } =
+    field;
+  const registrationProps = register(key as Path<TFieldValues>, {
+    required: required,
+  });
 
   const fieldLabel = (
     <label htmlFor={key}>
@@ -31,22 +35,14 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
   const renderRadioOption = (opt: FormFieldOption) => (
     <label key={opt.value} className={styles.radioLabel}>
-      <input
-        type="radio"
-        value={opt.value}
-        {...register(key as Path<TFieldValues>, { required: required })}
-      />
+      <input type="radio" value={opt.value} {...registrationProps} />
       {opt.label}
     </label>
   );
 
   const renderCheckboxOption = (opt: FormFieldOption) => (
     <label key={opt.value} className={styles.checkboxLabel}>
-      <input
-        type="checkbox"
-        value={opt.value}
-        {...register(key as Path<TFieldValues>, { required: required })}
-      />
+      <input type="checkbox" value={opt.value} {...registrationProps} />
       {opt.label}
     </label>
   );
@@ -63,10 +59,22 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
               id={key}
               type={type}
               placeholder={placeholder || ''}
-              {...register(key as Path<TFieldValues>, { required: required })}
+              {...registrationProps}
             />
             {unit && <span className={styles.unit}>{unit}</span>}
           </div>
+        </div>
+      );
+
+    case 'textarea':
+      return (
+        <div className={styles.field}>
+          {fieldLabel}
+          <textarea
+            id={key}
+            placeholder={placeholder || ''}
+            {...registrationProps}
+          />
         </div>
       );
 
@@ -74,10 +82,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
       return (
         <div className={styles.field}>
           {fieldLabel}
-          <select
-            id={key}
-            {...register(key as Path<TFieldValues>, { required: required })}
-          >
+          <select id={key} {...registrationProps}>
             {options?.map(renderSelectOption)}
           </select>
         </div>
@@ -95,6 +100,18 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
         </div>
       );
 
+    case 'checkbox':
+      return (
+        <div className={styles.field}>
+          {/* El label de un checkbox singular envuelve al input */}
+          <label className={styles.checkboxLabel}>
+            <input id={key} type="checkbox" {...registrationProps} />
+            {label}
+            {required && <span className={styles.required}> *</span>}
+          </label>
+        </div>
+      );
+
     case 'checkbox-group':
       return (
         <div className={styles.field}>
@@ -102,6 +119,19 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
             <legend>{fieldLabel}</legend>
             <div>{options?.map(renderCheckboxOption)}</div>
           </fieldset>
+        </div>
+      );
+
+    case 'file':
+      return (
+        <div className={styles.field}>
+          {fieldLabel}
+          <input
+            id={key}
+            type="file"
+            accept={accept || ''} // Possible prop name, not confirmed in the API docs
+            {...registrationProps}
+          />
         </div>
       );
 

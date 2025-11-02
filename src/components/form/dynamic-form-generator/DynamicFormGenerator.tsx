@@ -3,6 +3,7 @@ import type { ApiFormConfig } from '../../../types/forms';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { DynamicFormField } from '../dynamic-form-field/DynamicFormField';
 import styles from './DynamicFormGenerator.module.css';
+import { Button } from '../../common/button/Button';
 
 interface GeneratorProps {
   energyType: string;
@@ -35,17 +36,18 @@ export const DynamicFormGenerator = ({
     reset();
   };
 
-  // TODO: Ask for UIHints purposal
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       {fieldsToRender.map((field) => (
         <DynamicFormField key={field.key} field={field} register={register} />
       ))}
 
-      <button type="submit" className={styles.submitButton}>
+      <Button type="primary" onClick={handleSubmit(onSubmit)}>
         Publish Offer
-      </button>
+      </Button>
+      <Button type="secondary" onClick={() => reset()}>
+        Clear Form
+      </Button>
     </form>
   );
 };

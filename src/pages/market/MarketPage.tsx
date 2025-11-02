@@ -7,6 +7,7 @@ import { MarketRow } from '../../components/market/table-row/TableRow';
 import { MarketFilter } from '../../components/market/market-filter/MarketFilter';
 import { OfferDetailsModal } from '../../components/market/offer-details-modal/OfferDetailsModal';
 import { useMarketFilters } from '../../hooks/useMarketFilters';
+import { PageTitle } from '../../components/common';
 
 export const MarketPage = () => {
   const { filters, handleFilterChange } = useMarketFilters();
@@ -27,45 +28,41 @@ export const MarketPage = () => {
 
   return (
     <div>
-      <h1 className={styles.title}>Energy Market</h1>{' '}
-      {/* TODO: Extract title to a component */}
-      <div className={styles.container}>
-        {/* TODO: Consider extracting container to a component */}
-        <p>
-          {filteredOffers.length} of {allOffers.length} offers showing
-        </p>
-        <MarketFilter filters={filters} onFilterChange={handleFilterChange} />
-        <hr className={styles.divider} />
-        <table className={styles.table}>
-          <thead>
-            <tr className={styles.tableHead}>
-              <th className={styles.tableHeader}>Source</th>
-              <th className={styles.tableHeader}>Vendor</th>
-              <th className={styles.tableHeader}>Price (€/MWh)</th>
-              <th className={styles.tableHeader}>Quantity (MWh)</th>
-              <th className={styles.tableHeader}>Status</th>
-              <th className={styles.tableHeader}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOffers.map((offer: EnergyOffer) => (
-              <MarketRow
-                key={offer.id}
-                offer={offer}
-                onTrade={() => handleTrade(offer.id)}
-                onDetails={setSelectedOffer}
-              />
-            ))}
-          </tbody>
-        </table>
-        {selectedOffer && (
-          <OfferDetailsModal
-            offer={selectedOffer}
-            onClose={handleCloseDetailsModal}
-            handleTrade={() => handleTrade(selectedOffer.id)}
-          />
-        )}
-      </div>
+      <PageTitle title="Energy Market" />
+      <p>
+        {filteredOffers.length} of {allOffers.length} offers showing
+      </p>
+      <MarketFilter filters={filters} onFilterChange={handleFilterChange} />
+      <table className={styles.table}>
+        <thead>
+          <tr className={styles.tableHead}>
+            {/* This could be extracted to an array of headers */}
+            <th className={styles.tableHeader}>Source</th>
+            <th className={styles.tableHeader}>Vendor</th>
+            <th className={styles.tableHeader}>Price (€/MWh)</th>
+            <th className={styles.tableHeader}>Quantity (MWh)</th>
+            <th className={styles.tableHeader}>Status</th>
+            <th className={styles.tableHeader}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredOffers.map((offer: EnergyOffer) => (
+            <MarketRow
+              key={offer.id}
+              offer={offer}
+              onTrade={() => handleTrade(offer.id)}
+              onDetails={setSelectedOffer}
+            />
+          ))}
+        </tbody>
+      </table>
+      {selectedOffer && (
+        <OfferDetailsModal
+          offer={selectedOffer}
+          onClose={handleCloseDetailsModal}
+          handleTrade={() => handleTrade(selectedOffer.id)}
+        />
+      )}
     </div>
   );
 };

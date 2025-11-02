@@ -1,6 +1,7 @@
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
 import styles from './TableRow.module.css';
 import { useRowFlash } from '../../../hooks/useRowFlashing';
+import { Button } from '../../common/button/Button';
 
 interface MarketRowProps {
   offer: EnergyOffer;
@@ -20,19 +21,16 @@ export const MarketRow = ({ offer, onTrade, onDetails }: MarketRowProps) => {
       <td className={styles.tableCell}>{offer.quantity}</td>
       <td className={styles.tableCell}>{offer.status}</td>
       <td className={styles.tableCellCentered}>
-        <button
-          className={styles.detailsButton}
-          onClick={() => onDetails(offer)}
-        >
+        <Button type="secondary" onClick={() => onDetails(offer)}>
           Details
-        </button>
-        <button
-          className={styles.tradeButton}
+        </Button>
+        <Button
+          type="primary"
           onClick={() => onTrade(offer.id)}
           disabled={offer.status === ENERGY_OFFER_STATUSES.COMPLETED}
         >
           Trade
-        </button>
+        </Button>
       </td>
     </tr>
   );

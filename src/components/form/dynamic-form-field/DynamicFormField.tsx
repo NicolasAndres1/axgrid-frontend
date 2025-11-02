@@ -1,4 +1,3 @@
-import { useMemo, useCallback } from 'react';
 import type { FormField, FormFieldOption } from '../../../types/forms';
 import type { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 import styles from './DynamicFormField.module.css';
@@ -14,54 +13,42 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 }: FieldProps<TFieldValues>) => {
   const { key, label, type, required, unit, placeholder, options } = field;
 
-  const fieldLabel = useMemo(
-    () => (
-      <label htmlFor={key}>
-        {label}
-        {required && <span className={styles.required}> *</span>}
-      </label>
-    ),
-    [key, label, required],
+  const fieldLabel = (
+    <label htmlFor={key}>
+      {label}
+      {required && <span className={styles.required}> *</span>}
+    </label>
   );
 
   // Set of functions to render the different types of fields with multiple options
   // Extracted for better readability
   // ------------------------------------------------------------
-  const renderSelectOption = useCallback(
-    (opt: FormFieldOption) => (
-      <option key={opt.value} value={opt.value}>
-        {opt.label}
-      </option>
-    ),
-    [],
+  const renderSelectOption = (opt: FormFieldOption) => (
+    <option key={opt.value} value={opt.value}>
+      {opt.label}
+    </option>
   );
 
-  const renderRadioOption = useCallback(
-    (opt: FormFieldOption) => (
-      <label key={opt.value} className={styles.radioLabel}>
-        <input
-          type="radio"
-          value={opt.value}
-          {...register(key as Path<TFieldValues>, { required: required })}
-        />
-        {opt.label}
-      </label>
-    ),
-    [key, register, required],
+  const renderRadioOption = (opt: FormFieldOption) => (
+    <label key={opt.value} className={styles.radioLabel}>
+      <input
+        type="radio"
+        value={opt.value}
+        {...register(key as Path<TFieldValues>, { required: required })}
+      />
+      {opt.label}
+    </label>
   );
 
-  const renderCheckboxOption = useCallback(
-    (opt: FormFieldOption) => (
-      <label key={opt.value} className={styles.checkboxLabel}>
-        <input
-          type="checkbox"
-          value={opt.value}
-          {...register(key as Path<TFieldValues>, { required: required })}
-        />
-        {opt.label}
-      </label>
-    ),
-    [key, register, required],
+  const renderCheckboxOption = (opt: FormFieldOption) => (
+    <label key={opt.value} className={styles.checkboxLabel}>
+      <input
+        type="checkbox"
+        value={opt.value}
+        {...register(key as Path<TFieldValues>, { required: required })}
+      />
+      {opt.label}
+    </label>
   );
   // ------------------------------------------------------------
 

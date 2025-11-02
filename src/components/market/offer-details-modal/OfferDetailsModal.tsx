@@ -1,6 +1,7 @@
 import React from 'react';
-import type { EnergyOffer } from '../../../types';
+import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
 import styles from './OfferDetailsModal.module.css';
+import { Button } from '../../common/button/Button';
 
 interface OfferDetailsModalProps {
   offer: EnergyOffer;
@@ -56,18 +57,22 @@ export const OfferDetailsModal = ({
           </p>
         </div>
 
-        <hr />
-        <div className={styles.modalFooter}>
-          <button
-            onClick={() => {
-              handleTrade();
-              onClose();
-            }}
-            className={styles.tradeButton}
-          >
-            Trade
-          </button>
-        </div>
+        {offer.status !== ENERGY_OFFER_STATUSES.COMPLETED && (
+          <>
+            <hr />
+            <div className={styles.modalFooter}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  handleTrade();
+                  onClose();
+                }}
+              >
+                Trade
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

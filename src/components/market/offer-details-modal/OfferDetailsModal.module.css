@@ -25,7 +25,7 @@
   max-width: 90%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.3s ease-out;
-  background: #020127;
+  background: #242424;
   padding: 20px;
   border-radius: 8px;
 }
@@ -80,7 +80,7 @@
 }
 
 .code {
-  background: #3326e8;
+  background: #020127;
   padding: 2px 4px;
   border-radius: 4px;
   font-family: monospace;

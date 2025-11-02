@@ -1,6 +1,7 @@
 import { useEnergy } from '../../hooks/useEnergy';
 import { DynamicFormGenerator } from '../../components/form/dynamic-form-generator/DynamicFormGenerator';
 import { useState } from 'react';
+import { PageTitle } from '../../components/common';
 
 export const SellEnergyPage = () => {
   const [selectedEnergyType, setSelectedEnergyType] = useState('');
@@ -20,7 +21,7 @@ export const SellEnergyPage = () => {
 
   return (
     <div>
-      <h1>Sell Energy</h1>
+      <PageTitle title="Sell Energy" />
       <label>Select the energy type: </label>
       <select
         id="energyType"

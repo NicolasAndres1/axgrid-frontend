@@ -6,11 +6,17 @@ import {
   type MarketFilters,
 } from '../types';
 
-export const useFilteredOffers = (
-  allOffers: EnergyOffer[],
-  filters: MarketFilters,
-  justCompletedId: string | null,
-) => {
+export type UseFilteredOffersProps = {
+  allOffers: EnergyOffer[];
+  filters: MarketFilters;
+  justCompletedId: string | null;
+};
+
+export const useFilteredOffers = ({
+  allOffers,
+  filters,
+  justCompletedId,
+}: UseFilteredOffersProps) => {
   const filteredOffers = useMemo(() => {
     let offers = allOffers;
 

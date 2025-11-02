@@ -15,7 +15,11 @@ export const MarketPage = () => {
   const [justCompletedId, setJustCompletedId] = useState<string | null>(null);
   const allOffers = useMarketStore((state) => state.offers);
   const setOfferStatus = useMarketStore((state) => state.setOfferStatus);
-  const filteredOffers = useFilteredOffers(allOffers, filters, justCompletedId);
+  const filteredOffers = useFilteredOffers({
+    allOffers,
+    filters,
+    justCompletedId,
+  });
 
   const handleTrade = (id: string) => {
     setOfferStatus(id, ENERGY_OFFER_STATUSES.COMPLETED);

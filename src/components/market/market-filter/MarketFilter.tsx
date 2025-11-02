@@ -6,15 +6,6 @@ import {
   FILTER_OFFER_STATUSES,
 } from '../../../types';
 import styles from './MarketFilter.module.css';
-
-interface FilterFieldProps {
-  id: string;
-  label: string;
-  value: string;
-  options: Array<{ value: string; label: string }>;
-  onChange: (value: string) => void;
-}
-
 interface MarketFiltersProps {
   filters: MarketFilters;
   onFilterChange: (
@@ -57,6 +48,14 @@ export const MarketFilter = ({
     </div>
   );
 };
+
+interface FilterFieldProps {
+  id: string;
+  label: string;
+  value: string;
+  options: Array<{ value: string; label: string }>;
+  onChange: (value: string) => void;
+}
 
 const FilterField = ({
   id,

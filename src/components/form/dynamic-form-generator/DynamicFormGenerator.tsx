@@ -5,7 +5,7 @@ import { DynamicFormField } from '../dynamic-form-field/DynamicFormField';
 import styles from './DynamicFormGenerator.module.css';
 import { Button } from '../../common';
 
-interface GeneratorProps {
+interface DynamicFormGeneratorProps {
   energyType: string;
   config: ApiFormConfig;
 }
@@ -17,7 +17,7 @@ type FormData = {
 export const DynamicFormGenerator = ({
   energyType,
   config,
-}: GeneratorProps) => {
+}: DynamicFormGeneratorProps) => {
   const { register, handleSubmit, reset } = useForm<FormData>();
 
   const fieldsToRender = useMemo(() => {

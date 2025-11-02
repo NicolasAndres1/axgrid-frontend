@@ -2,7 +2,7 @@ import type { FormField, FormFieldOption } from '../../../types/forms';
 import type { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 import styles from './DynamicFormField.module.css';
 
-interface FieldProps<TFieldValues extends FieldValues> {
+interface DynamicFormFieldProps<TFieldValues extends FieldValues> {
   field: FormField;
   register: UseFormRegister<TFieldValues>;
 }
@@ -10,7 +10,7 @@ interface FieldProps<TFieldValues extends FieldValues> {
 export const DynamicFormField = <TFieldValues extends FieldValues>({
   field,
   register,
-}: FieldProps<TFieldValues>) => {
+}: DynamicFormFieldProps<TFieldValues>) => {
   const { key, label, type, required, unit, placeholder, options, accept } =
     field;
   const registrationProps = register(key as Path<TFieldValues>, {

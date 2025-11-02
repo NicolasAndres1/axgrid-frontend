@@ -14,7 +14,7 @@ export interface EnergyOffer {
 export const ENERGY_SOURCE_TYPES = {
   SOLAR: 'solar',
   GAS: 'gas',
-  HYDRO: 'hydro',
+  HYDRO: 'hydro', // Not specified in the API docs but it's a valid source type
 } as const;
 
 export type EnergySourceType =

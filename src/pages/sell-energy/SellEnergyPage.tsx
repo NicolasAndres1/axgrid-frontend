@@ -1,23 +1,32 @@
-import { useEnergy } from '../../hooks/useEnergy';
+import { useEnergyOfferingsData } from '../../hooks/useEnergyOfferingsData';
 import { DynamicFormGenerator } from '../../components/form/dynamic-form-generator/DynamicFormGenerator';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PageTitle } from '../../components/common';
+import { useError } from '../../store';
 
 export const SellEnergyPage = () => {
   const [selectedEnergyType, setSelectedEnergyType] = useState('');
+  const setError = useError((state) => state.setError);
+
   const {
     energyTypes,
     energyOfferingsData,
-    isEnergyOfferingsLoading,
-    energyOfferingsError,
-    isEnergyOfferingsSuccess,
-  } = useEnergy();
-  const shouldShowForm =
-    selectedEnergyType && energyOfferingsData && isEnergyOfferingsSuccess;
+    isEnergyOfferingsDataLoading,
+    energyOfferingsDataError,
+    isEnergyOfferingsDataSuccess,
+  } = useEnergyOfferingsData();
 
-  if (isEnergyOfferingsLoading) return <div>Loading...</div>;
-  if (energyOfferingsError)
-    return <div>Error: {energyOfferingsError.message}</div>;
+  const shouldShowForm =
+    selectedEnergyType && energyOfferingsData && isEnergyOfferingsDataSuccess;
+
+  useEffect(() => {
+    if (energyOfferingsDataError) {
+      setError(energyOfferingsDataError.message);
+    }
+  }, [energyOfferingsDataError, setError]);
+
+  if (isEnergyOfferingsDataLoading) return <div>Loading...</div>;
+  if (energyOfferingsDataError) return;
 
   return (
     <div>

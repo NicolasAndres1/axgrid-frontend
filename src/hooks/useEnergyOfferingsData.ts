@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { useEnergyOfferings } from '../services/queries/useEnergyOfferings';
 
-export const useEnergy = () => {
+export const useEnergyOfferingsData = () => {
   const {
     data: energyOfferingsData,
-    isLoading: isEnergyOfferingsLoading,
-    error: energyOfferingsError,
-    isSuccess: isEnergyOfferingsSuccess,
+    isLoading: isEnergyOfferingsDataLoading,
+    error: energyOfferingsDataError,
+    isSuccess: isEnergyOfferingsDataSuccess,
   } = useEnergyOfferings();
 
   const energyTypes = useMemo(() => {
@@ -21,8 +21,8 @@ export const useEnergy = () => {
   return {
     energyTypes,
     energyOfferingsData,
-    isEnergyOfferingsLoading,
-    energyOfferingsError,
-    isEnergyOfferingsSuccess,
+    isEnergyOfferingsDataLoading,
+    energyOfferingsDataError,
+    isEnergyOfferingsDataSuccess,
   };
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMarketStore } from '../../store/marketStore';
+import { useMarketStore } from '../../store';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../types';
 import { useFilteredOffers } from '../../hooks/useFilteredOffers';
 import styles from './MarketPage.module.css';

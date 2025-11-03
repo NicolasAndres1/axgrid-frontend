@@ -11,6 +11,36 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  transform: translateY(-100%);
+  animation: bannerAnimation 7.3s ease-out forwards;
+}
+
+@keyframes bannerAnimation {
+  0% {
+    transform: translateY(-100%);
+  }
+  4.1% {
+    transform: translateY(0);
+  }
+  95.9% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.banner.closing {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
 }
 
 .message {

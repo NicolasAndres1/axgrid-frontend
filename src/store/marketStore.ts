@@ -5,6 +5,7 @@ import {
   type EnergyOfferStatus,
   type MarketMetrics,
 } from '../types/energyOffers';
+import { WS_URL } from '../config';
 
 interface MarketState {
   offers: EnergyOffer[];
@@ -17,10 +18,9 @@ interface MarketState {
   setOfferStatus: (id: string, status: EnergyOfferStatus) => void;
 }
 
-const SOCKET_URL = 'http://localhost:4001';
-const socket: Socket = io(SOCKET_URL, {
+const socket: Socket = io(WS_URL, {
   autoConnect: false,
-  reconnectionAttempts: 5,
+  reconnectionAttempts: 3,
   reconnectionDelay: 3000,
 });
 

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useEnergyOfferings } from '../services/queries/useEnergyOfferings';
+import { useEnergyOfferings } from '../services';
 
 export const useEnergyOfferingsData = () => {
   const {

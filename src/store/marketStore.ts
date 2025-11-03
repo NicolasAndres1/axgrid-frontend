@@ -4,7 +4,7 @@ import {
   type EnergyOffer,
   type EnergyOfferStatus,
   type MarketMetrics,
-} from '../types/energyOffers';
+} from '../types';
 import { WS_URL } from '../config';
 
 interface MarketState {

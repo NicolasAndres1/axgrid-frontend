@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useMarketStore } from '../../store';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../types';
-import { useFilteredOffers } from '../../hooks/useFilteredOffers';
+import { useFilteredOffers, useMarketFilters } from '../../hooks';
 import styles from './MarketPage.module.css';
-import { MarketRow } from '../../components/market/table-row/TableRow';
-import { MarketFilter } from '../../components/market/market-filter/MarketFilter';
-import { OfferDetailsModal } from '../../components/market/offer-details-modal/OfferDetailsModal';
-import { useMarketFilters } from '../../hooks/useMarketFilters';
-import { PageTitle } from '../../components/common';
+import {
+  TableRow,
+  MarketFilter,
+  OfferDetailsModal,
+  PageTitle,
+} from '../../components';
 
 export const MarketPage = () => {
   const { filters, handleFilterChange } = useMarketFilters();
@@ -51,7 +52,7 @@ export const MarketPage = () => {
         </thead>
         <tbody>
           {filteredOffers.map((offer: EnergyOffer) => (
-            <MarketRow
+            <TableRow
               key={offer.id}
               offer={offer}
               onTrade={() => handleTrade(offer.id)}

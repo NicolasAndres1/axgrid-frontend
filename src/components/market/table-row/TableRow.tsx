@@ -1,20 +1,20 @@
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
-import styles from './TableRow.module.css';
-import { useRowFlash } from '../../../hooks/useRowFlash';
+import { useRowFlash } from '../../../hooks';
 import { Button } from '../../common';
+import styles from './TableRow.module.css';
 
-interface MarketRowProps {
+interface TableRowProps {
   offer: EnergyOffer;
   onTrade: (id: string) => void;
   onDetails: (offer: EnergyOffer) => void;
 }
 
-export const MarketRow = ({ offer, onTrade, onDetails }: MarketRowProps) => {
+export const TableRow = ({ offer, onTrade, onDetails }: TableRowProps) => {
   const flashClass = useRowFlash(offer);
   const rowFlashClass = flashClass ? styles[flashClass] : '';
 
   return (
-    <tr className={rowFlashClass}>
+    <tr className={rowFlashClass} data-testid={offer.id}>
       <td className={styles.tableCell}>{offer.sourceType}</td>
       <td className={styles.tableCell}>{offer.vendor}</td>
       <td className={styles.tableCell}>{offer.price.toFixed(2)}</td>

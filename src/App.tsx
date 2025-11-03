@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { MarketPage } from './pages/market/MarketPage';
-import { SellEnergyPage } from './pages/sell-energy/SellEnergyPage';
+import { MarketPage, SellEnergyPage } from './pages';
 import styles from './App.module.css';
 import { useError, useMarketStore } from './store';
 import { ErrorBanner } from './components';

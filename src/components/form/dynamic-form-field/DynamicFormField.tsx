@@ -1,4 +1,4 @@
-import type { FormField, FormFieldOption } from '../../../types/forms';
+import type { FormField, FormFieldOption } from '../../../types';
 import type { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 import styles from './DynamicFormField.module.css';
 

@@ -1,7 +1,6 @@
-import { useEnergyOfferingsData } from '../../hooks/useEnergyOfferingsData';
-import { DynamicFormGenerator } from '../../components/form/dynamic-form-generator/DynamicFormGenerator';
 import { useState, useEffect } from 'react';
-import { PageTitle } from '../../components/common';
+import { useEnergyOfferingsData } from '../../hooks';
+import { DynamicFormGenerator, PageTitle } from '../../components';
 import { useError } from '../../store';
 
 export const SellEnergyPage = () => {

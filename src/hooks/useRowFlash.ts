@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../types';
 
+// A helper hook to get the previous value of a prop or state.
 const usePrevious = <T>(value: T) => {
   const ref = useRef<T | undefined>(undefined);
   useEffect(() => {
@@ -9,6 +10,7 @@ const usePrevious = <T>(value: T) => {
   return ref.current;
 };
 
+// Defines the string literal types for our flash states
 const FlashClass = {
   CREATE: 'flashCreate',
   UPDATE: 'flashUpdate',
@@ -21,55 +23,50 @@ export const useRowFlash = (offer: EnergyOffer) => {
   const prevUpdatedAt = usePrevious(offer.updatedAt);
   const prevStatus = usePrevious(offer.status);
 
+  // Create flash logic
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
-
-    const activateFlash = (flashType: string) => {
-      setFlashClass(flashType);
-      timer = setTimeout(() => setFlashClass(null), 1000);
-    };
-
-    // Case: New offer
-    // We detect if it is new if: no has prevUpdatedAt (first render)
-    // And the offer was created less than 5 seconds ago (to avoid flashes on initial load)
-    const isFirstRender = prevUpdatedAt === undefined;
+    // Check if the offer was created within the last 5 seconds.
+    // This prevents old, loaded offers from flashing on initial page load.
     const isRecentlyCreated = Date.now() - offer.createdAt < 5000;
 
-    if (isFirstRender && isRecentlyCreated) {
-      activateFlash(FlashClass.CREATE);
-      return () => {
-        if (timer) clearTimeout(timer);
-      };
+    if (isRecentlyCreated) {
+      setFlashClass(FlashClass.CREATE);
+      const timer = setTimeout(() => setFlashClass(null), 1000);
+
+      // We only need a cleanup for this specific timer
+      return () => clearTimeout(timer);
+    }
+  }, [offer.createdAt]);
+
+  // Update flash logic
+  useEffect(() => {
+    // Skip the first render
+    if (prevUpdatedAt === undefined) {
+      return;
     }
 
-    // Case: Updated offer
-    // If there is a previous value and the updatedAt changed
-    const wasUpdated =
-      prevUpdatedAt !== undefined && offer.updatedAt !== prevUpdatedAt;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
-    if (wasUpdated) {
-      const justCompleted =
-        prevStatus !== ENERGY_OFFER_STATUSES.COMPLETED &&
-        offer.status === ENERGY_OFFER_STATUSES.COMPLETED;
+    // Check for "Completed"
+    // We check this first, as it's the most specific UI feedback.
+    const justCompleted =
+      prevStatus !== ENERGY_OFFER_STATUSES.COMPLETED &&
+      offer.status === ENERGY_OFFER_STATUSES.COMPLETED;
 
-      const flashType = justCompleted
-        ? FlashClass.COMPLETED
-        : FlashClass.UPDATE;
-
-      activateFlash(flashType);
+    if (justCompleted) {
+      setFlashClass(FlashClass.COMPLETED);
+      timer = setTimeout(() => setFlashClass(null), 1000);
+    } else if (offer.updatedAt !== prevUpdatedAt) {
+      // Check for "Updated"
+      // Only if 'updatedAt' changed and it wasn't a 'completed' event.
+      setFlashClass(FlashClass.UPDATE);
+      timer = setTimeout(() => setFlashClass(null), 1000);
     }
 
-    // Cleanup: cancel the timer if the effect is re-executed or unmounted
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [
-    offer.createdAt,
-    offer.updatedAt,
-    offer.status,
-    prevUpdatedAt,
-    prevStatus,
-  ]);
+  }, [offer.updatedAt, offer.status, prevUpdatedAt, prevStatus]);
 
   return flashClass;
 };

@@ -82,4 +82,44 @@ test.describe('Market Page E2E Flow (Zombie Row Test)', () => {
     // re-run, and the "completed" row should finally disappear.
     await expect(targetRow).not.toBeVisible();
   });
+
+  test('should open and close the details modal', async ({ page }) => {
+    // --- 1. SETUP ---
+    // Navigate to the page and wait for the table to load
+    await page.goto('/');
+    const firstRow = page.locator('tbody tr').first();
+    await expect(firstRow).toBeVisible({ timeout: 10000 });
+
+    // --- 2. GRAB DATA ---
+    // Get the vendor name from the second cell (td) of the first row
+    // We'll use this to verify the correct data loaded in the modal
+    const vendorName = await firstRow.locator('td').nth(1).textContent();
+    expect(vendorName).toBeTruthy(); // Make sure we got text
+
+    // --- 3. ACTION (OPEN MODAL) ---
+    // Find and click the "Details" button on that row
+    const detailsButton = firstRow.getByRole('button', { name: 'Details' });
+    await detailsButton.click();
+
+    // --- 4. VERIFY (MODAL IS OPEN) ---
+    // Find the modal using the data-testid we added
+    const modal = page.getByTestId('offer-details-modal');
+
+    // Check that the modal is visible
+    await expect(modal).toBeVisible();
+
+    // Check that the modal contains the correct vendor name
+    await expect(modal.getByRole('heading')).toHaveText(
+      new RegExp(vendorName!),
+    );
+
+    // --- 5. ACTION (CLOSE MODAL) ---
+    // Find the close button
+    const closeButton = modal.getByRole('button', { name: '×' });
+    await closeButton.click();
+
+    // --- 6. VERIFY (MODAL IS CLOSED) ---
+    // The modal should now be hidden
+    await expect(modal).toBeHidden();
+  });
 });

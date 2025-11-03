@@ -17,7 +17,11 @@ export const OfferDetailsModal = ({
   const onContentClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+      data-testid="offer-details-modal"
+    >
       <div className={styles.modalContent} onClick={onContentClick}>
         <div className={styles.modalHeader}>
           <h2>

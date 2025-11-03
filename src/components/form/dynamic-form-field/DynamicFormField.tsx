@@ -52,7 +52,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
     case 'text':
     case 'number':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           {fieldLabel}
           <div>
             <input
@@ -68,7 +68,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
     case 'textarea':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           {fieldLabel}
           <textarea
             id={key}
@@ -80,7 +80,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
     case 'select':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           {fieldLabel}
           <select id={key} {...registrationProps}>
             {options?.map(renderSelectOption)}
@@ -90,7 +90,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
     case 'radio':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           <fieldset className={styles.fieldset}>
             <legend>{fieldLabel} </legend>
             <div className={styles.radioContainer}>
@@ -102,7 +102,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
     case 'checkbox':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           {/* El label de un checkbox singular envuelve al input */}
           <label className={styles.checkboxLabel}>
             <input id={key} type="checkbox" {...registrationProps} />
@@ -114,7 +114,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
     case 'checkbox-group':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           <fieldset className={styles.fieldset}>
             <legend>{fieldLabel}</legend>
             <div>{options?.map(renderCheckboxOption)}</div>
@@ -124,7 +124,7 @@ export const DynamicFormField = <TFieldValues extends FieldValues>({
 
     case 'file':
       return (
-        <div className={styles.field}>
+        <div className={styles.field} data-testid={key}>
           {fieldLabel}
           <input
             id={key}

@@ -57,20 +57,20 @@ test.describe('Market Page E2E Flow (Zombie Row Test)', () => {
     await tradeButton.click();
 
     // --- 4. VERIFICATION OF "ZOMBIE ROW" LOGIC ---
-    // A. The Flash:
-    //    We assert that the <tr> element now has the 'flashCompleted' class.
-    //    We use a regex (/.../i) to match the class name generated
-    //    by CSS Modules (e.g., 'TableRow_flashCompleted__abc12').
+    // The Flash:
+    // We assert that the <tr> element now has the 'flashCompleted' class.
+    // We use a regex (/.../i) to match the class name generated
+    // by CSS Modules (e.g., 'TableRow_flashCompleted__abc12').
     await expect(targetRow).toHaveClass(/flashCompleted/i);
 
-    // B. The Button (Disabled):
-    //    Assert that the button is now disabled.
+    // The Button (Disabled):
+    // Assert that the button is now disabled.
     await expect(tradeButton).toBeDisabled();
 
-    // C. The "Zombie Row" Logic:
-    //    Even though the filter is 'active' and the
-    //    row's status is now 'completed', it must remain visible
-    //    thanks to the 'justCompletedId' logic in 'useFilteredOffers'.
+    // The "Zombie Row" Logic:
+    // Even though the filter is 'active' and the
+    // row's status is now 'completed', it must remain visible
+    // thanks to the 'justCompletedId' logic in 'useFilteredOffers'.
     await expect(targetRow).toBeVisible();
 
     // --- 5. DELETING THE "ZOMBIE ROW" ---

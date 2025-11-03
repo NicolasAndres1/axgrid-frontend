@@ -30,7 +30,7 @@ export const SellEnergyPage = () => {
   return (
     <div>
       <PageTitle title="Sell Energy" />
-      <label>Select the energy type: </label>
+      <label htmlFor="energyType">Select the energy type: </label>
       <select
         id="energyType"
         aria-label="Energy type"

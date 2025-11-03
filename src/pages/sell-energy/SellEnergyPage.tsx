@@ -34,6 +34,7 @@ export const SellEnergyPage = () => {
       <label>Select the energy type: </label>
       <select
         id="energyType"
+        aria-label="Energy type"
         value={selectedEnergyType}
         onChange={(e) => setSelectedEnergyType(e.target.value)}
       >

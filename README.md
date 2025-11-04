@@ -11,6 +11,7 @@ A dynamic, real-time interface for the AxGrid energy trading platform, built as 
 * **Real-time Comms:** Socket.io-client
 * **Styling:** CSS Modules
 * **Linting/Formatting:** ESLint + Prettier
+* **Testing:** Vitest + Playwright E2E
 
 ## Running the Project
 

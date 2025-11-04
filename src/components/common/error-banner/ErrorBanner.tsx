@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import styles from './ErrorBanner.module.css';
 import { useError } from '../../../store';
+import styles from './ErrorBanner.module.css';
 
 interface ErrorBannerProps {
   message: string;

@@ -2,8 +2,8 @@ import { useEffect, useMemo } from 'react';
 import type { ApiFormConfig } from '../../../types';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { DynamicFormField } from '../dynamic-form-field/DynamicFormField';
-import styles from './DynamicFormGenerator.module.css';
 import { Button } from '../../common';
+import styles from './DynamicFormGenerator.module.css';
 
 interface DynamicFormGeneratorProps {
   energyType: string;

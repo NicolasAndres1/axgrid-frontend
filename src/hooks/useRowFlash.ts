@@ -10,7 +10,6 @@ const usePrevious = <T>(value: T) => {
   return ref.current;
 };
 
-// Defines the string literal types for our flash states
 const FlashClass = {
   CREATE: 'flashCreate',
   UPDATE: 'flashUpdate',

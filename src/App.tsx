@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { MarketPage, SellEnergyPage } from './pages';
-import styles from './App.module.css';
 import { useError, useMarketStore } from './store';
 import { ErrorBanner } from './components';
+import styles from './App.module.css';
 
 export default function App() {
   const connect = useMarketStore((state) => state.connect);

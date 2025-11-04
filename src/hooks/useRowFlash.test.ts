@@ -1,7 +1,5 @@
-// src/hooks/useRowFlash.test.ts
-
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useRowFlash } from './useRowFlash';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../types';
 

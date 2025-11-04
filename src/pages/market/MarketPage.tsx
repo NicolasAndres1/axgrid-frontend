@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useMarketStore } from '../../store';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../types';
 import { useFilteredOffers, useMarketFilters } from '../../hooks';
-import styles from './MarketPage.module.css';
 import {
   TableRow,
   MarketFilter,
   OfferDetailsModal,
   PageTitle,
 } from '../../components';
+import styles from './MarketPage.module.css';
 
 export const MarketPage = () => {
   const { filters, handleFilterChange } = useMarketFilters();

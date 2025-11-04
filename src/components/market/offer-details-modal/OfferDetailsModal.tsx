@@ -1,7 +1,7 @@
-import React from 'react';
+import { type MouseEvent } from 'react';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
-import styles from './OfferDetailsModal.module.css';
 import { Button } from '../../common';
+import styles from './OfferDetailsModal.module.css';
 
 interface OfferDetailsModalProps {
   offer: EnergyOffer;
@@ -14,7 +14,7 @@ export const OfferDetailsModal = ({
   onClose,
   handleTrade,
 }: OfferDetailsModalProps) => {
-  const onContentClick = (e: React.MouseEvent) => e.stopPropagation();
+  const onContentClick = (e: MouseEvent) => e.stopPropagation();
 
   return (
     <div

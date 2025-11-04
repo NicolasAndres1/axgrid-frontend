@@ -54,11 +54,13 @@ export const useRowFlash = (offer: EnergyOffer) => {
 
     if (justCompleted) {
       setFlashClass(FlashClass.COMPLETED);
+
       timer = setTimeout(() => setFlashClass(null), 1000);
     } else if (offer.updatedAt !== prevUpdatedAt) {
       // Check for "Updated"
       // Only if 'updatedAt' changed and it wasn't a 'completed' event.
       setFlashClass(FlashClass.UPDATE);
+
       timer = setTimeout(() => setFlashClass(null), 1000);
     }
 

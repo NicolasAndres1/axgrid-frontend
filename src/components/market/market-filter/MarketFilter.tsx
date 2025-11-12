@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   type EnergySourceType,
   type EnergyOfferStatus,
@@ -5,6 +6,7 @@ import {
   FILTER_SOURCE_TYPES,
   FILTER_OFFER_STATUSES,
 } from '../../../types';
+import { FilterField } from '../filter-field/FilterField';
 import styles from './MarketFilter.module.css';
 interface MarketFiltersProps {
   filters: MarketFilters;
@@ -14,7 +16,7 @@ interface MarketFiltersProps {
   ) => void;
 }
 
-export const MarketFilter = ({
+const MarketFiltersComponent = ({
   filters,
   onFilterChange,
 }: MarketFiltersProps) => {
@@ -49,36 +51,4 @@ export const MarketFilter = ({
   );
 };
 
-interface FilterFieldProps {
-  id: string;
-  label: string;
-  value: string;
-  options: Array<{ value: string; label: string }>;
-  onChange: (value: string) => void;
-}
-
-const FilterField = ({
-  id,
-  label,
-  value,
-  options,
-  onChange,
-}: FilterFieldProps) => (
-  <div className={styles.filterGroup}>
-    <label htmlFor={id} className={styles.label}>
-      {label}
-    </label>
-    <select
-      id={id}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className={styles.select}
-    >
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  </div>
-);
+export const MarketFilter = memo(MarketFiltersComponent);

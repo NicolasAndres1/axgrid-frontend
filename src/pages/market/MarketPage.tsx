@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useMarketStore } from '../../store';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../types';
 import { useFilteredOffers, useMarketFilters } from '../../hooks';
@@ -22,14 +22,23 @@ export const MarketPage = () => {
     justCompletedId,
   });
 
-  const handleTrade = (id: string) => {
-    setOfferStatus(id, ENERGY_OFFER_STATUSES.COMPLETED);
+  const handleTrade = useCallback(
+    (id: string) => {
+      setOfferStatus(id, ENERGY_OFFER_STATUSES.COMPLETED);
 
-    // We keep the status of the row that was just completed to handle the animation
-    setJustCompletedId(id);
-    setTimeout(() => setJustCompletedId(null), 1200);
-  };
-  const handleCloseDetailsModal = () => setSelectedOffer(null);
+      // We keep the status of the row that was just completed to handle the animation
+      setJustCompletedId(id);
+      setTimeout(() => setJustCompletedId(null), 1200);
+    },
+    [setOfferStatus],
+  );
+
+  const handleCloseDetailsModal = useCallback(() => setSelectedOffer(null), []);
+
+  // prevents re-renders of TableRow
+  const handleDetails = useCallback((offer: EnergyOffer) => {
+    setSelectedOffer(offer);
+  }, []);
 
   return (
     <div>
@@ -55,8 +64,8 @@ export const MarketPage = () => {
             <TableRow
               key={offer.id}
               offer={offer}
-              onTrade={() => handleTrade(offer.id)}
-              onDetails={setSelectedOffer}
+              onTrade={handleTrade}
+              onDetails={handleDetails}
             />
           ))}
         </tbody>

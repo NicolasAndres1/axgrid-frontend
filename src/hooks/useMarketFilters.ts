@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   FILTER_SOURCE_TYPES,
@@ -45,15 +45,18 @@ export const useMarketFilters = () => {
     setSearchParams(params, { replace: true });
   }, [filters, setSearchParams]);
 
-  const handleFilterChange = (
-    filterType: keyof MarketFilters,
-    value: EnergySourceType | EnergyOfferStatus,
-  ) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterType]: value,
-    }));
-  };
+  const handleFilterChange = useCallback(
+    (
+      filterType: keyof MarketFilters,
+      value: EnergySourceType | EnergyOfferStatus,
+    ) => {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [filterType]: value,
+      }));
+    },
+    [],
+  );
 
   return {
     filters,

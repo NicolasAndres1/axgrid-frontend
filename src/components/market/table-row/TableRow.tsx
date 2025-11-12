@@ -2,6 +2,7 @@ import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../../../types';
 import { useRowFlash } from '../../../hooks';
 import { Button } from '../../common';
 import styles from './TableRow.module.css';
+import { memo } from 'react';
 
 interface TableRowProps {
   offer: EnergyOffer;
@@ -9,7 +10,7 @@ interface TableRowProps {
   onDetails: (offer: EnergyOffer) => void;
 }
 
-export const TableRow = ({ offer, onTrade, onDetails }: TableRowProps) => {
+const TableRowComponent = ({ offer, onTrade, onDetails }: TableRowProps) => {
   const flashClass = useRowFlash(offer);
   const rowFlashClass = flashClass ? styles[flashClass] : '';
 
@@ -35,3 +36,33 @@ export const TableRow = ({ offer, onTrade, onDetails }: TableRowProps) => {
     </tr>
   );
 };
+
+// Custom comparison function to prevent unnecessary re-renders
+const areEqual = (
+  prevProps: TableRowProps,
+  nextProps: TableRowProps,
+): boolean => {
+  // Compare offer by its properties
+  const prevOffer = prevProps.offer;
+  const nextOffer = nextProps.offer;
+
+  const offerEqual =
+    prevOffer.id === nextOffer.id &&
+    prevOffer.sourceType === nextOffer.sourceType &&
+    prevOffer.vendor === nextOffer.vendor &&
+    prevOffer.price === nextOffer.price &&
+    prevOffer.quantity === nextOffer.quantity &&
+    prevOffer.status === nextOffer.status &&
+    prevOffer.unit === nextOffer.unit &&
+    prevOffer.location === nextOffer.location &&
+    prevOffer.createdAt === nextOffer.createdAt &&
+    prevOffer.updatedAt === nextOffer.updatedAt;
+
+  const handlersEqual =
+    prevProps.onTrade === nextProps.onTrade &&
+    prevProps.onDetails === nextProps.onDetails;
+
+  return offerEqual && handlersEqual;
+};
+
+export const TableRow = memo(TableRowComponent, areEqual);

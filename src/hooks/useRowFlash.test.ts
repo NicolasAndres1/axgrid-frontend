@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useRowFlash } from './useRowFlash';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../types';
+import { useMarketStore } from '../store';
 
 const MOCK_DATE_NOW = new Date('2025-11-01T10:00:00.000Z').getTime(); // 10:00:00 AM
 
@@ -21,22 +22,47 @@ const MOCK_OLD_OFFER: EnergyOffer = {
 beforeEach(() => {
   vi.useFakeTimers();
   vi.setSystemTime(MOCK_DATE_NOW);
+  // Reset the store's initialLoadTimestamp before each test
+  useMarketStore.setState({ initialLoadTimestamp: null });
 });
 
 afterEach(() => {
   vi.useRealTimers();
+  // Clean up the store after each test
+  useMarketStore.setState({ initialLoadTimestamp: null });
 });
 
 describe('useRowFlash Hook', () => {
-  it('should return "flashCreate" for a new offer on initial render', () => {
+  it('should return "flashCreate" for a new offer created after initial load', () => {
+    // Simulate initial load happening at 09:59:00 AM
+    const initialLoadTime = MOCK_DATE_NOW - 2000; // 09:59:58 AM
+    useMarketStore.setState({ initialLoadTimestamp: initialLoadTime });
+
+    // Offer created after initial load
     const newOffer = {
       ...MOCK_OLD_OFFER,
-      createdAt: MOCK_DATE_NOW - 1000, // 09:59:59 AM
+      createdAt: MOCK_DATE_NOW - 1000, // 09:59:59 AM (after initial load)
     };
 
     const { result } = renderHook(() => useRowFlash(newOffer));
 
     expect(result.current).toBe('flashCreate');
+  });
+
+  it('should not return "flashCreate" for an offer created before initial load', () => {
+    // Simulate initial load happening at 10:00:00 AM
+    const initialLoadTime = MOCK_DATE_NOW;
+    useMarketStore.setState({ initialLoadTimestamp: initialLoadTime });
+
+    // Offer created before initial load
+    const oldOffer = {
+      ...MOCK_OLD_OFFER,
+      createdAt: MOCK_DATE_NOW - 1000, // 09:59:59 AM (before initial load)
+    };
+
+    const { result } = renderHook(() => useRowFlash(oldOffer));
+
+    expect(result.current).toBe(null);
   });
 
   it('should return "flashUpdate" when updatedAt changes', () => {

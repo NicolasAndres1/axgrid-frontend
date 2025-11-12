@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { ENERGY_OFFER_STATUSES, type EnergyOffer } from '../types';
+import { useMarketStore } from '../store';
 
 // A helper hook to get the previous value of a prop or state.
 const usePrevious = <T>(value: T) => {
   const ref = useRef<T | undefined>(undefined);
+
   useEffect(() => {
     ref.current = value;
   }, [value]);
+
   return ref.current;
 };
 
@@ -18,15 +21,19 @@ const FlashClass = {
 
 export const useRowFlash = (offer: EnergyOffer) => {
   const [flashClass, setFlashClass] = useState<string | null>(null);
+  const initialLoadTimestamp = useMarketStore(
+    (state) => state.initialLoadTimestamp,
+  );
 
   const prevUpdatedAt = usePrevious(offer.updatedAt);
   const prevStatus = usePrevious(offer.status);
 
   // Create flash logic
   useEffect(() => {
-    // Check if the offer was created within the last 5 seconds.
+    // Only show flash if the offer was created after the initial load.
     // This prevents old, loaded offers from flashing on initial page load.
-    const isRecentlyCreated = Date.now() - offer.createdAt < 5000;
+    const isRecentlyCreated =
+      initialLoadTimestamp !== null && offer.createdAt > initialLoadTimestamp;
 
     if (isRecentlyCreated) {
       setFlashClass(FlashClass.CREATE);
@@ -35,7 +42,7 @@ export const useRowFlash = (offer: EnergyOffer) => {
       // We only need a cleanup for this specific timer
       return () => clearTimeout(timer);
     }
-  }, [offer.createdAt]);
+  }, [offer.createdAt, initialLoadTimestamp]);
 
   // Update flash logic
   useEffect(() => {

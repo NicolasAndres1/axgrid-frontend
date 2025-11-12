@@ -12,6 +12,7 @@ interface MarketState {
   metrics: MarketMetrics;
   isConnected: boolean;
   connectionStatus: 'connecting' | 'connected' | 'disconnected' | 'error';
+  initialLoadTimestamp: number | null;
 
   connect: () => void;
   disconnect: () => void;
@@ -34,6 +35,7 @@ export const useMarketStore = create<MarketState>((set, get) => ({
   },
   isConnected: false,
   connectionStatus: 'disconnected',
+  initialLoadTimestamp: null,
 
   setOfferStatus: (id: string, status: EnergyOfferStatus) => {
     const eventName = `offers:${status}`;
@@ -73,7 +75,7 @@ export const useMarketStore = create<MarketState>((set, get) => ({
     socket.on('offers:init', (initialOffers: EnergyOffer[]) => {
       console.log('Socket: offers:init', initialOffers.length);
 
-      set({ offers: initialOffers });
+      set({ offers: initialOffers, initialLoadTimestamp: Date.now() });
     });
 
     socket.on('offers:created', (newOffer: EnergyOffer) => {
@@ -115,6 +117,11 @@ export const useMarketStore = create<MarketState>((set, get) => ({
     socket.disconnect();
     socket.off();
 
-    set({ isConnected: false, offers: [], connectionStatus: 'disconnected' });
+    set({
+      isConnected: false,
+      offers: [],
+      connectionStatus: 'disconnected',
+      initialLoadTimestamp: null,
+    });
   },
 }));

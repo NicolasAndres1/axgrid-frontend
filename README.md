@@ -1,6 +1,6 @@
-# AxGrid Frontend Challenge
+# AxGrid
 
-A dynamic, real-time interface for the AxGrid energy trading platform, built as a technical assessment.
+A dynamic, real-time interface for the AxGrid energy trading platform.
 
 ## Tech Stack
 
